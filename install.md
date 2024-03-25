@@ -1,4 +1,4 @@
-> ❗ This tutorial is only tested for Windows 11 and needs an NVIDIA GPU.
+> ❗ This tutorial is only tested for Windows 11 and needs an NVIDIA GPU. <br>
 > ❗ It's advisable to perform a fresh installation rather than relying solely on existing files on GitHub. This ensures alignment with the repository.
 
 # Tree detection
