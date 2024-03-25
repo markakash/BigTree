@@ -49,7 +49,7 @@ After that, you need to set up the environment. You can do this by following the
 ``python -m pip install -e detectron2`` <br>
 ❗ If Detectron2 fails during it's setup.py develop phase, use this fix: <br>
 <tab>1. Navigate to the  ``detectron2\layers\csrc\nms_rotated\nms_rotated_cuda.cu`` file <br>
-<tab>2. Replace the top line with this:
+<tab>2. Replace the top lines with this:
 ```cpp
 // Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 #include <ATen/ATen.h>
@@ -77,7 +77,8 @@ Download the [X-101-FPN](https://drive.google.com/file/d/108tORWyD2BFFfO5kYim9jP
 
 2. Run this command:<br>
 ```set OPENCV_FFMPEG_READ_ATTEMPTS=32768``` <br>
-to fix an issue with the audio channel of the video.
+to fix an issue with the audio channel of the video. <br>
+(This might be needed after every restart)
 
 ## Run the code
 
