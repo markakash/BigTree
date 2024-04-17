@@ -12,6 +12,7 @@ setup_logger()
 # import some common libraries
 import os, cv2
 import torch
+import json
 
 # import detectron2 utilities
 from detectron2 import model_zoo
@@ -22,7 +23,7 @@ from detectron2.utils.video_visualizer import VideoVisualizer
 
 
 #  model and video variables
-model_name = 'X-101_RGB_60k.pth'
+model_name = 'ResNext-101_fold_01.pth'
 video_path = './output/video.mp4'
 
 if __name__ == "__main__":
@@ -47,8 +48,12 @@ if __name__ == "__main__":
     
     cfg.OUTPUT_DIR = './output' 
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, model_name)
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
     # cfg.INPUT.MIN_SIZE_TEST = 0  # no resize at test time
+
+    # clear points file
+    with open('./output/video_points.json', 'w') as f:
+        pass
     
     # set detector
     predictor_synth = DefaultPredictor(cfg)    
@@ -95,6 +100,8 @@ if __name__ == "__main__":
         # 5 fps
         if nframes % 12 == 0:
             outputs_pred = predictor_synth(crop_frame)
+            with open('./output/video_points.json', 'a') as f:
+                f.write(json.dumps(outputs_pred["instances"].pred_boxes.tensor.tolist()) + '\n')
             # v_synth = Visualizer(crop_frame[:, :, ::-1],
             #                     metadata=tree_metadata, 
             #                     scale=1, 

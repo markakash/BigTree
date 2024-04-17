@@ -12,6 +12,7 @@ setup_logger()
 # import some common libraries
 import os, cv2
 import torch
+import json
 
 # import detectron2 utilities
 from detectron2 import model_zoo
@@ -59,6 +60,14 @@ if __name__ == "__main__":
     # inference
     im = cv2.imread(image_path)
     outputs_pred = predictor_synth(im)
+
+    # Save the detection points
+    detection_points = outputs_pred["instances"].pred_boxes.tensor.tolist()
+
+    # Save to a file
+    with open('./output/single_frame_points.json', 'w') as f:
+        json.dump(detection_points, f)
+
     v_synth = Visualizer(im[:, :, ::-1],
                     metadata=tree_metadata, 
                     scale=1,
